@@ -1,0 +1,168 @@
+.top-nav {
+  background-color: black;
+}
+
+.top-nav__content {
+  margin: auto;
+  max-width: 80rem;
+}
+
+.top-nav__links {
+  padding: 0 1rem;
+  min-height: 2.5rem;
+  margin: 0;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.top-nav__links > * {
+  margin: 0 !important;
+}
+
+.top-nav__link {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  color: white;
+  text-decoration: none;
+}
+
+.main-nav {
+  border: 1px solid #d9d9e0;
+}
+
+.main-nav__container {
+  margin: auto;
+  padding: 0 1rem;
+  max-width: 80rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  column-gap: 6rem;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  width: 8rem;
+}
+
+.main-nav__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.icon-container {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.divider--vertical {
+  width: 1px;
+  height: 1.5rem;
+  background-color: #d9d9e0;
+}
+
+.main-nav__pages {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  border-top: 1px solid #d9d9e0;
+  display: flex;
+  list-style: none;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.main-nav__pages-wrapper {
+  flex-grow: 1;
+}
+
+.main-nav__pages > * {
+  margin: 0 !important;
+}
+
+.main-nav__page {
+  display: block;
+  padding: 0.875rem 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  font-weight: 500;
+  color: #60646c;
+  text-decoration: none;
+}
+
+.main-nav__page:hover {
+  background-color: #f0f1fe;
+}
+
+
+.animation {
+  animation: bounce 400ms;
+  animation-timing-function: ease-in-out;
+}
+
+
+@keyframes bounce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(2.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.icon-container svg path {
+  transition: stroke 300ms ease;
+}
+
+.icon-container.animation svg path {
+  stroke: #007bff;
+}
+
+@media (max-width: 26.25rem) {
+  .main-nav__container {
+    column-gap: 1rem;
+  }
+}
+
+@media (min-width: 48rem) {
+  .nav__links {
+    padding: 0 2rem;
+  }
+
+  .main-nav__container {
+    flex-wrap: nowrap;
+    padding: 0 2rem;
+    gap: 3rem;
+  }
+
+  .logo-container {
+    width: 10rem;
+  }
+
+  .main-nav__pages {
+    border-top: none;
+  }
+
+  .main-nav__page {
+    padding: 1.375rem 0.75rem;
+  }
+
+  .main-nav__actions {
+    order: 1;
+  }
+}

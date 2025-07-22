@@ -1,0 +1,69 @@
+/* Resuelve estilos de seccion de categorias aqui */
+.section {
+  margin: auto;
+  max-width: 80rem;
+  padding: 1rem;
+}
+
+.section__title {
+  margin: 0;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.description {
+  color: #60646c;
+}
+
+.categories-container {
+  margin-top: 2.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.category {
+  flex-basis: 328px;
+  flex-grow: 1;
+  transition: transform 200ms;
+  transition-timing-function: ease-in;
+}
+.category:hover {
+  transform: translateY(-10px);
+}
+
+.category__image {
+  border-radius: 0.75rem;
+  object-fit: cover;
+  aspect-ratio: 3/2;
+}
+
+.category__title {
+  margin-top: 1rem;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  color: #1c2024;
+  margin-bottom: 0;
+}
+
+.category__description {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: #60646c;
+}
+
+@media (min-width: 768px) {
+  .category__image {
+    aspect-ratio: 4/5;
+  }
+
+  .section {
+    padding: 2rem;
+  }
+
+  .section__title {
+    font-size: 2.5rem;
+  }
+}

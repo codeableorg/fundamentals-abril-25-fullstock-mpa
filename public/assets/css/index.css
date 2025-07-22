@@ -1,0 +1,24 @@
+/* Capa de propriedades personalizada */
+@import "./1-foundation/colors.css";
+@import "./1-foundation/typography.css";
+
+/* Capa que resetea o normaliza estilos de navegador */
+@import "./1-foundation/reset.css";
+
+/* Capa que sirve de base y define estilos que se comparten entre paginas */
+@import "./1-foundation/elements.css";
+
+/* Capa para layout */
+@import "./2-layouts/containers.css";
+@import "./2-layouts/sections.css";
+
+/* Capas que sirven para estilos especificos */
+@import "./3-components/header.css";
+@import "./3-components/categories.css";
+@import "./3-components/login.css";
+@import "./3-components/products.css";
+@import "./3-components/product-card.css";
+@import "./3-components/subscribe.css";
+@import "./3-components/footer.css";
+@import "./3-components/hero.css";
+@import "./3-components/button.css";
