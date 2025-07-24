@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="/assets/css/index.css" />
+  </head>
+  <body>
+    <article class="product-container">
+      <section>
+        <img src="/assets/<%= product.imgSrc %>" alt="" class="product-image"/>
+      </section>
+      <section>
+        <h3 class="product-title"><%= product.title %></h3>
+        <p class="product-price"><%= product.price %></p>
+        <p class="product-description"><%= product.description %></p>
+        <button class="product-button">Agregar al Carrito</button>
+        <hr />
+        <p class="product-features-title">Características</p>
+        <ul class="product-features">
+          <% product.features.map(feature => { %>
+          <li class="product-feature"><%= feature %></li>
+          <% }) %>
+        </ul>
+      </section>
+    </article>
+    <!-- estilos UI CSS -->
+  </body>
+</html>

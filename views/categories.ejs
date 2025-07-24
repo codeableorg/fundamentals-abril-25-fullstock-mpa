@@ -12,10 +12,12 @@
         <% products.map(product => { %>
         <article class="product">
           <div class="product-image__container">
+            <a href="/product/<%= product.id %>">
             <img
               width="100%"
               src="/assets/<%= product.imgSrc %>"
             />
+            </a>
           </div>
           <div class="product-content__container">
             <h2 class="product-title"><%= product.title %></h2>
