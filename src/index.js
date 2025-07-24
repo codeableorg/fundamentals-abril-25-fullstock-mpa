@@ -1,5 +1,7 @@
 const express = require("express")
 const expressEjsLayouts = require("express-ejs-layouts")
+const fs = require("fs")
+const path = require("path")
 
 const app = express()
 const PORT = 3000
@@ -14,6 +16,36 @@ app.get("/", (_, res) => {
 
 app.get("/product", (_, res) => {
   res.render("product-section")
+})
+
+app.get("/category/:categorySlug", (req, res) => {
+  const categorySlug = req.params.categorySlug
+  const filePath = path.join(__dirname, "..", "/data", "data.json")
+
+  console.log(categorySlug) // polos
+  console.log(filePath)
+
+  // leer data.json
+  fs.readFile(filePath, 'utf-8', (err, data) => {
+    if (err) {
+      console.error(err)
+      return
+    }
+
+    const {categories, products } = JSON.parse(data)
+
+    const categoryFound = categories.find(category => category.slug === categorySlug)
+    const categoryId = categoryFound === undefined ? -1 : categoryFound.id
+    console.log(categoryId)
+    // polos => 1
+
+    const productsBySlug = products.filter(product => product.categoryId === categoryId)
+    console.log(productsBySlug)
+
+    res.render("categories", {products: productsBySlug})
+
+  })
+
 })
 
 app.listen(PORT, () => console.log(`Servidor FullStock escuchando en http://localhost:${PORT}`))

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Products template</title>
+  <link rel="stylesheet" href="/assets/css/index.css" />
+  </head>
+  <body>
+    <main>
+      <section class="products-container">
+        <% products.map(product => { %>
+        <article class="product">
+          <div class="product-image__container">
+            <img
+              width="100%"
+              src="/assets/<%= product.imgSrc %>"
+            />
+          </div>
+          <div class="product-content__container">
+            <h2 class="product-title"><%= product.title %></h2>
+            <p class="product-description">
+              <%= product.description %></p>
+            <p class="product-price"><%= product.pice %></p>
+          </div>
+        </article>
+        <% }) %>
+     </section>
+    </main>
+  </body>
+</html>
