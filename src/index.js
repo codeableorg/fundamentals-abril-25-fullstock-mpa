@@ -1,5 +1,6 @@
 const express = require("express");
 const expressEjsLayouts = require("express-ejs-layouts");
+const session = require("express-session");
 const fs = require("fs");
 const path = require("path");
 
@@ -9,8 +10,18 @@ const PORT = 3000;
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 app.use(expressEjsLayouts);
+app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(
+  session({
+    secret: "keyboard cat",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
-app.get("/", (_, res) => {
+const cart = [];
+
+app.get("/", (req, res) => {
   res.render("home");
 });
 
@@ -30,17 +41,13 @@ app.get("/product/:productId", (req, res) => {
       (product) => product.id === parseInt(productId)
     );
 
-    console.log(productFound);
-    res.render("product", {product : productFound});
+    res.render("product", { product: productFound });
   });
 });
 
 app.get("/category/:categorySlug", (req, res) => {
   const categorySlug = req.params.categorySlug;
   const filePath = path.join(__dirname, "..", "/data", "data.json");
-
-  console.log(categorySlug); // polos
-  console.log(filePath);
 
   // leer data.json
   fs.readFile(filePath, "utf-8", (err, data) => {
@@ -55,16 +62,38 @@ app.get("/category/:categorySlug", (req, res) => {
       (category) => category.slug === categorySlug
     );
     const categoryId = categoryFound === undefined ? -1 : categoryFound.id;
-    console.log(categoryId);
-    // polos => 1
 
     const productsBySlug = products.filter(
       (product) => product.categoryId === categoryId
     );
-    console.log(productsBySlug);
 
     res.render("categories", { products: productsBySlug });
   });
+});
+
+app.post("/cart/add", (req, res) => {
+  const productId = parseInt(req.body.productId)
+  const cartItem = { productId, quantity: 1 };
+
+  if (!req.session.cart) {
+    req.session.cart = [];
+    req.session.cart.push(cartItem);
+  } else {
+    const indexProductFound = req.session.cart.findIndex(product => product.productId === productId)
+    if (indexProductFound >= 0) {
+      req.session.cart[indexProductFound].quantity++
+    } else {
+      req.session.cart.push(cartItem);
+    }
+
+  }
+
+  // donde esta el carrito? : data.json
+
+  // veamos el carrito
+  console.log(req.session);
+
+  res.redirect("/");
 });
 
 app.listen(PORT, () =>

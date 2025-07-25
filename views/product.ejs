@@ -15,7 +15,10 @@
         <h3 class="product-title"><%= product.title %></h3>
         <p class="product-price"><%= product.price %></p>
         <p class="product-description"><%= product.description %></p>
-        <button class="product-button">Agregar al Carrito</button>
+        <form action="/cart/add" method="post">
+          <input name="productId" value="<%= product.id %>" hidden>
+          <button class="product-button" type="submit">Agregar al Carrito</button>
+        </form>
         <hr />
         <p class="product-features-title">Características</p>
         <ul class="product-features">
