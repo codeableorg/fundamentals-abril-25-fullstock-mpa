@@ -2,6 +2,7 @@ import express from "express";
 import expressEjsLayouts from "express-ejs-layouts";
 import session from "express-session";
 import * as productRepository from "./repositories/productRepository.js";
+import * as productService from "./services/productService.js"
 import fs from "fs";
 import path from "path";
 import { dirname } from "path";
@@ -34,17 +35,9 @@ app.get("/", (req, res) => {
 app.get("/product/:productId", async (req, res) => {
   const productId = req.params.productId;
 
-  try {
-    const products = await productRepository.getProducts()
-    const productFound = products.find(
-          (product) => product.id === parseInt(productId)
-        );
-
-    res.render("product", { product: productFound });
-  } catch (err) {
-      console.error(err);
-      return [];
-  }
+  const productFound = await productService.findProductById(productId)
+  
+  res.render("product", { product: productFound });
 });
 
 app.get("/category/:categorySlug", async (req, res) => {
