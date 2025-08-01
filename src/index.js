@@ -3,6 +3,7 @@ import expressEjsLayouts from "express-ejs-layouts";
 import session from "express-session";
 import * as productRepository from "./repositories/productRepository.js";
 import * as productService from "./services/productService.js"
+import * as categoryService from "./services/categoryService.js"
 import fs from "fs";
 import path from "path";
 import { dirname } from "path";
@@ -43,23 +44,9 @@ app.get("/product/:productId", async (req, res) => {
 app.get("/category/:categorySlug", async (req, res) => {
   const categorySlug = req.params.categorySlug;
 
-  try {
-    const categories = await productRepository.getCategories()
-    const products  = await productRepository.getProducts()
-    const categoryFound = categories.find(
-      (category) => category.slug === categorySlug
-    );
-    const categoryId = categoryFound === undefined ? -1 : categoryFound.id;
+  const productsBySlug = await categoryService.findCategoryBySlug(categorySlug)
 
-    const productsBySlug = products.filter(
-      (product) => product.categoryId === categoryId
-    );
-
-    res.render("categories", { products: productsBySlug });
-  } catch (err) {
-    console.error(err);
-    return [];
-  }
+  res.render("categories", { products: productsBySlug });
 });
 
 app.post("/cart/add", (req, res) => {
