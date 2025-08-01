@@ -1,11 +1,7 @@
-// const express = require("express");
-// const expressEjsLayouts = require("express-ejs-layouts");
-// const session = require("express-session");
-// const fs = require("fs");
-// const path = require("path");
 import express from "express";
 import expressEjsLayouts from "express-ejs-layouts";
 import session from "express-session";
+import * as productRepository from "./repositories/productRepository.js";
 import fs from "fs";
 import path from "path";
 import { dirname } from "path";
@@ -28,6 +24,16 @@ app.use(
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
+async function loadData() {
+  const products = await productRepository.getProducts();
+  const categories = await productRepository.getCategories();
+  console.log("===>repository");
+  console.log(products);
+  console.log(categories);
+}
+
+loadData()
 
 const cart = [];
 
