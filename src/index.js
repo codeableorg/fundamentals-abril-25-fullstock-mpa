@@ -25,55 +25,34 @@ app.use(
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-async function loadData() {
-  const products = await productRepository.getProducts();
-  const categories = await productRepository.getCategories();
-  console.log("===>repository");
-  console.log(products);
-  console.log(categories);
-}
-
-loadData()
-
 const cart = [];
 
 app.get("/", (req, res) => {
   res.render("home");
 });
 
-app.get("/product/:productId", (req, res) => {
+app.get("/product/:productId", async (req, res) => {
   const productId = req.params.productId;
 
-  const filePath = path.join(__dirname, "..", "/data", "data.json");
-  fs.readFile(filePath, "utf-8", (err, data) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-
-    const { products } = JSON.parse(data);
-
+  try {
+    const products = await productRepository.getProducts()
     const productFound = products.find(
-      (product) => product.id === parseInt(productId)
-    );
+          (product) => product.id === parseInt(productId)
+        );
 
     res.render("product", { product: productFound });
-  });
+  } catch (err) {
+      console.error(err);
+      return [];
+  }
 });
 
-app.get("/category/:categorySlug", (req, res) => {
+app.get("/category/:categorySlug", async (req, res) => {
   const categorySlug = req.params.categorySlug;
-  const filePath = path.join(__dirname, "..", "/data", "data.json");
 
-  // leer data.json
-  fs.readFile(filePath, "utf-8", (err, data) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-
-    const { categories, products } = JSON.parse(data);
-
+  try {
+    const categories = await productRepository.getCategories()
+    const products  = await productRepository.getProducts()
     const categoryFound = categories.find(
       (category) => category.slug === categorySlug
     );
@@ -84,7 +63,10 @@ app.get("/category/:categorySlug", (req, res) => {
     );
 
     res.render("categories", { products: productsBySlug });
-  });
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
 });
 
 app.post("/cart/add", (req, res) => {
