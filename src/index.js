@@ -1,8 +1,15 @@
-const express = require("express");
-const expressEjsLayouts = require("express-ejs-layouts");
-const session = require("express-session");
-const fs = require("fs");
-const path = require("path");
+// const express = require("express");
+// const expressEjsLayouts = require("express-ejs-layouts");
+// const session = require("express-session");
+// const fs = require("fs");
+// const path = require("path");
+import express from "express";
+import expressEjsLayouts from "express-ejs-layouts";
+import session from "express-session";
+import fs from "fs";
+import path from "path";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
 
 const app = express();
 const PORT = 3000;
@@ -18,6 +25,9 @@ app.use(
     saveUninitialized: true,
   })
 );
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const cart = [];
 
@@ -72,20 +82,21 @@ app.get("/category/:categorySlug", (req, res) => {
 });
 
 app.post("/cart/add", (req, res) => {
-  const productId = parseInt(req.body.productId)
+  const productId = parseInt(req.body.productId);
   const cartItem = { productId, quantity: 1 };
 
   if (!req.session.cart) {
     req.session.cart = [];
     req.session.cart.push(cartItem);
   } else {
-    const indexProductFound = req.session.cart.findIndex(product => product.productId === productId)
+    const indexProductFound = req.session.cart.findIndex(
+      (product) => product.productId === productId
+    );
     if (indexProductFound >= 0) {
-      req.session.cart[indexProductFound].quantity++
+      req.session.cart[indexProductFound].quantity++;
     } else {
       req.session.cart.push(cartItem);
     }
-
   }
 
   // donde esta el carrito? : data.json
