@@ -4,6 +4,7 @@ import session from "express-session";
 import * as productRepository from "./repositories/productRepository.js";
 import * as productService from "./services/productService.js"
 import * as categoryService from "./services/categoryService.js"
+import * as homeController from "./controllers/homeController.js"
 import fs from "fs";
 import path from "path";
 import { dirname } from "path";
@@ -29,9 +30,7 @@ const __dirname = dirname(__filename);
 
 const cart = [];
 
-app.get("/", (req, res) => {
-  res.render("home");
-});
+app.get("/", homeController.getHome);
 
 app.get("/product/:productId", async (req, res) => {
   const productId = req.params.productId;
