@@ -5,6 +5,7 @@ import * as productRepository from "./repositories/productRepository.js";
 import * as productService from "./services/productService.js"
 import * as categoryService from "./services/categoryService.js"
 import * as homeController from "./controllers/homeController.js"
+import * as productController from "./controllers/productController.js"
 import fs from "fs";
 import path from "path";
 import { dirname } from "path";
@@ -32,13 +33,7 @@ const cart = [];
 
 app.get("/", homeController.getHome);
 
-app.get("/product/:productId", async (req, res) => {
-  const productId = req.params.productId;
-
-  const productFound = await productService.findProductById(productId)
-  
-  res.render("product", { product: productFound });
-});
+app.get("/product/:productId", productController.getProduct); 
 
 app.get("/category/:categorySlug", async (req, res) => {
   const categorySlug = req.params.categorySlug;
